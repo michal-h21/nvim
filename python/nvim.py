@@ -198,7 +198,7 @@ def load_note( note ): #{{{
   debug( "load_note on " + note )
   filename = note.replace(' ','\ ')
   move_to_data()
-  insert_template(filename, note)
+  insert_template(note, note)
   cmd = 'edit '+ filename
   vim.command(cmd )
 # }}}
@@ -326,9 +326,12 @@ def zettel_id():
   
 def insert_template(filename, title):
   if not os.path.isfile(filename): 
+    debug("Vkladame template")
     f = open(filename, "w")
     f.write(title+"\n")
     f.close()
+  else:
+    debug("Nevkladame template")
 
 
 # Python intiialisation code
