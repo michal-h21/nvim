@@ -3,6 +3,7 @@ import os
 import xapian
 import shutil
 import tempfile
+import time
 
 # Debug function for handling wipe database errors
 def nvim_rmtree_error( func, path, exc_info ): # {{{
@@ -195,8 +196,10 @@ def move_to_data(): #{{{
 
 def load_note( note ): #{{{
   debug( "load_note on " + note )
+  filename = note.replace(' ','\ ')
   move_to_data()
-  cmd = 'edit '+note.replace(' ','\ ')
+  insert_template(filename, note)
+  cmd = 'edit '+ filename
   vim.command(cmd )
 # }}}
 
@@ -312,6 +315,21 @@ def load_from_selection(): #{{{
   # TODO - remove if/when we put it in an onload handler
   set_entry_line( name )
 # }}}
+
+# Make zettelkasten id from timestamp
+
+def zettel_id():
+  id = time.strftime("%Y%m%d%H%M")
+  vim.command("normal! i%s "%id)
+  #print(id)
+  #vim.command('let zettel_id="%s"'%id)
+  
+def insert_template(filename, title):
+  if not os.path.isfile(filename): 
+    f = open(filename, "w")
+    f.write(title+"\n")
+    f.close()
+
 
 # Python intiialisation code
 buf_results = vim.current.buffer

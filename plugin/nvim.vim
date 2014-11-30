@@ -61,6 +61,8 @@ function! NVIM_init()
   nnoremap        <silent>  <Leader>d :python delete_current_note()<CR>
   inoremap        <silent>  <Leader>r <ESC>:python rename_note()<CR>
   nnoremap        <silent>  <Leader>r :python rename_note()<CR>
+  inoremap        <silent>  <Leader>t <esc>:python zettel_id()<CR>a
+  nnoremap        <silent>  <Leader>t :python zettel_id()<CR>
 
   augroup nvim_group
     autocmd!
